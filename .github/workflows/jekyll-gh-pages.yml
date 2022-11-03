@@ -1,0 +1,20 @@
+jobs:
+  phpunit:
+    runs-on: ubuntu-20.04-16core
+    container:
+      image: kirschbaumdevelopment/laravel-test-runner:7.3
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install composer dependencies
+        run: composer install --no-scripts
+
+      - name: Copy Laravel environment Laravel Application
+        run: cp .env.ci .env
+
+      - name: Generate Key
+        run: php artisan key:generate
+
+      - name: Run Testsuite
+        run: vendor/bin/phpunit
